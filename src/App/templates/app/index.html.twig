@@ -1,0 +1,28 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Site A - Homepage{% endblock %}
+
+{% block content %}
+    {% if feature_section %}
+        <div>
+            <p>Showing "feature": <strong>enabled</strong></p>
+        </div>
+    {% else %}
+        <div>
+            <p>Showing "feature": <strong>disabled</strong></p>
+        </div>
+    {% endif %}
+
+    {% if some_feature_section %}
+        <div>
+            <p>This section is only visible with "some_feature" enabled for request located in "barcelona"</p>
+        </div>
+    {% endif %}
+
+    {% if in_progress_feature_section %}
+        <div>
+            <p>This is a work in progress section only visible with "in_progress_feature_section"
+                enabled for users with "ROLE_DEVELOPER"</p>
+        </div>
+    {% endif %}
+{% endblock %}
