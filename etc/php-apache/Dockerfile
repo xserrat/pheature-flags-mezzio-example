@@ -10,6 +10,8 @@ RUN a2enmod rewrite
 
 COPY --from=mysql:8.0 /usr/bin/mysql /usr/local/bin/mysql
 
+COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
+
 RUN docker-php-ext-install pdo_mysql
 
 ENTRYPOINT ["docker-php-entrypoint"]

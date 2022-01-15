@@ -13,13 +13,6 @@ services:
       - 9000:80
     depends_on:
       - mysql
-      - composer
-
-  composer:
-    image: composer:2.0
-    command: install
-    volumes:
-      - .:/app
 
   mysql:
     container_name: mezzioapp_mysql
