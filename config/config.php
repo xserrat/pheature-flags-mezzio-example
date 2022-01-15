@@ -18,6 +18,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Pheature\Model\Toggle\Container\ConfigProvider::class,
     \Pheature\Dbal\Toggle\Container\ConfigProvider::class,
     \Pheature\Sdk\Container\ConfigProvider::class,
     \Pheature\Crud\Psr11\Toggle\Container\ConfigProvider::class,
