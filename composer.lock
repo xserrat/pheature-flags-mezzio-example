@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "943804e1971ce105b862e4490bd71570",
+    "content-hash": "1d621542507229996903685020005251",
     "packages": [
         {
             "name": "aura/di",
@@ -6934,5 +6934,5 @@
         "php": "^7.4 || ~8.0.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

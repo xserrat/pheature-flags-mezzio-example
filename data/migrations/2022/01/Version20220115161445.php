@@ -25,7 +25,7 @@ INSERT INTO `pheature_toggles` (
 ) VALUES
 ('feature_section','feature_section',0,'[]', NOW()),
 ('show_contact_info','show_contact_info',1,'[{\"segments\": [{\"criteria\": {\"location\": \"barcelona\"}, \"segment_id\": \"barcelona\", \"segment_type\": \"strict_matching_segment\"}], \"strategy_id\": \"enable_for_location\", \"strategy_type\": \"enable_by_matching_segment\"}]', NOW()),
-('show_home_dynamic_catalog','show_home_dynamic_catalog',1,'[{\"segments\": [{\"criteria\": [{\"role\": \"developer\"}], \"segment_id\": \"developer_role\", \"segment_type\": \"strict_matching_segment\"}], \"strategy_id\": \"rollout_for_developers\", \"strategy_type\": \"enable_by_matching_segment\"}]', NOW());
+('work_in_progress','work_in_progress',0,'[]', NOW())
 ;
 SQL;
         $this->addSql($sql);
@@ -36,7 +36,7 @@ SQL;
         $sql = <<<SQL
 DELETE FROM `pheature_toggles`
 WHERE
-    feature_id IN ('feature_section', 'show_contact_info', 'show_home_dynamic_catalog')
+    feature_id IN ('feature_section', 'show_contact_info', 'work_in_progress')
 SQL;
         $this->addSql($sql);
     }

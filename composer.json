@@ -52,7 +52,7 @@
         "mezzio/mezzio": "^3.6",
         "mezzio/mezzio-aurarouter": "^3.0.1",
         "mezzio/mezzio-helpers": "^5.3",
-        "mezzio/mezzio-twigrenderer": "^2.6",
+        "mezzio/mezzio-twigrenderer": "^2.9",
         "pheature/dbal-toggle": "^0.3",
         "pheature/inmemory-toggle": "^0.3.0",
         "pheature/mezzio-toggle": "^0.3",

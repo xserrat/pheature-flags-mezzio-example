@@ -7,6 +7,7 @@ namespace App\Handler;
 use App\User\LoggedUser;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
+use Pheature\Core\Toggle\Read\FeatureFinder;
 use Pheature\Core\Toggle\Read\Toggle;
 use Pheature\Model\Toggle\Identity;
 use Psr\Http\Message\ResponseInterface;
@@ -15,11 +16,16 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class PheaturePageHandler implements RequestHandlerInterface
 {
+    private FeatureFinder $featureFinder;
     private TemplateRendererInterface $templating;
     private Toggle $toggle;
 
-    public function __construct(TemplateRendererInterface $templating, Toggle $toggle)
-    {
+    public function __construct(
+        FeatureFinder $featureFinder,
+        TemplateRendererInterface $templating,
+        Toggle $toggle
+    ) {
+        $this->featureFinder = $featureFinder;
         $this->templating = $templating;
         $this->toggle = $toggle;
     }
@@ -44,16 +50,15 @@ final class PheaturePageHandler implements RequestHandlerInterface
 
         $isFeatureEnabled = $this->toggle->isEnabled('feature_section');
         $someFeatureSection = $this->toggle->isEnabled('some_feature_section');
-        $inProgressFeatureSection = $this->toggle->isEnabled('in_progress_feature_section');
+        $workInProgressFeature = $this->toggle->isEnabled('work_in_progress');
         $showContactInformation = $this->toggle->isEnabled('show_contact_info', $identity);
-        $showHomeDynamicCatalog = $this->toggle->isEnabled('show_home_dynamic_catalog', $identity);
 
         $template = $this->templating->render('app::index', [
+            'all_features' => $this->featureFinder->all(),
             'feature_section' => $isFeatureEnabled,
             'some_feature_section' => $someFeatureSection,
-            'in_progress_feature_section' => $inProgressFeatureSection,
+            'work_in_progress_section' => $workInProgressFeature,
             'show_contact_information' => $showContactInformation,
-            'show_home_dynamic_catalog' => $showHomeDynamicCatalog,
         ]);
 
         return new HtmlResponse($template);

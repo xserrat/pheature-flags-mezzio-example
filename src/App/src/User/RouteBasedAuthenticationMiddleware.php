@@ -52,7 +52,7 @@ final class RouteBasedAuthenticationMiddleware implements MiddlewareInterface
         return new LoggedUser(
             $user,
             $userInformation['location'],
-            $userInformation['roles']
+            $userInformation['roles'] ?? []
         );
     }
 }

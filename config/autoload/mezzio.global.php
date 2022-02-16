@@ -41,4 +41,31 @@ return [
         'check_database_platform' => true,
         'organize_migrations' => 'year_and_month',
     ],
+    'templates' => [
+//        'extension' => 'file extension used by templates; defaults to html.twig',
+        'paths' => [
+            // namespace / path pairs
+            //
+            // Numeric namespaces imply the default/main namespace. Paths may be
+            // strings or arrays of string paths to associate with the namespace.
+        ],
+    ],
+    'twig' => [
+        'autoescape' => 'html', // Auto-escaping strategy [html|js|css|url|false]
+        'cache_dir' => 'data/cache/templates',
+//        'assets_url' => 'base URL for assets',
+//        'assets_version' => 'base version for assets',
+        'extensions' => [
+            // extension service names or instances
+        ],
+        'globals' => [
+            // Global variables passed to twig templates
+            //'ga_tracking' => 'UA-XXXXX-X'
+        ],
+        'optimizations' => -1, // -1: Enable all (default), 0: disable optimizations
+        'runtime_loaders' => [
+            // runtime loader names or instances
+        ],
+        'auto_reload' => true, // Recompile the template whenever the source code changes
+    ],
 ];

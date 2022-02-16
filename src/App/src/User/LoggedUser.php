@@ -9,7 +9,7 @@ final class LoggedUser
     private string $location;
     private array $roles;
 
-    public function __construct(string $id, string $location, array $roles)
+    public function __construct(string $id, ?string $location, array $roles)
     {
         $this->id = $id;
         $this->location = $location;
@@ -21,7 +21,7 @@ final class LoggedUser
         return $this->id;
     }
 
-    public function location(): string
+    public function location(): ?string
     {
         return $this->location;
     }
