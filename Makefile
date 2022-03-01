@@ -16,7 +16,7 @@ run: ## Run Mezzio app
 	docker-compose exec php bash -c "\
 		composer install --prefer-dist \
 		&& etc/scripts/wait_for_mysql.sh mysql 3306 root root \
-		&& vendor/bin/laminas pheature:dbal:init-toggle \
+		&& vendor/bin/laminas pheature:dbal:init-toggle --init-if-not-exists \
 		&& bin/doctrine-migrations migrations:migrate --no-interaction \
 	"
 
