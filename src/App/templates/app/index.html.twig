@@ -3,26 +3,134 @@
 {% block title %}Site A - Homepage{% endblock %}
 
 {% block content %}
+    <h1>Home Page with some <strong>feature flags</strong></h1>
+    <br>
+    <h2>Enabled features:</h2>
+    <ul>
+    {% for feature in all_features %}
+        {% if feature.enabled %}
+        <li>
+            <div>
+                <h3>Feature <strong>{{ feature.id }}</strong></h3>
+                <p>This section is displayed when <strong>{{ feature.id }}</strong> is <strong>enabled</strong></p>
+            </div>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    <br>
+    <h2>Disabled features:</h2>
+    <ul>
+        {% for feature in all_features %}
+            {% if not feature.enabled %}
+                <li>
+                    <div>
+                        <h3>Feature <strong>{{ feature.id }}</strong></h3>
+                        <p>This section is displayed when <strong>{{ feature.id }}</strong> is <strong>disabled</strong></p>
+                    </div>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <hr>
     {% if feature_section %}
         <div>
-            <p>Showing "feature": <strong>enabled</strong></p>
+            <h2>Feature section <strong>enabled</strong></h2>
+            <p>This section is displayed when "feature_section" feature is: <strong>enabled</strong> through the <strong>dbal</strong> driver. To disable it, you can run the following statement:</p>
+            <p><strong>UPDATE pheature_flags.pheature_toggles SET enabled = 0 WHERE feature_id = "feature_section"</strong></p>
+            <br>
         </div>
     {% else %}
         <div>
-            <p>Showing "feature": <strong>disabled</strong></p>
+            <h2>Feature section <strong>disabled</strong></h2>
+            <p>This section is displayed when "feature_section" feature is: <strong>disabled</strong> through the <strong>dbal</strong> driver. To enable it, you can run the following statement:</p>
+            <p><strong>UPDATE pheature_flags.pheature_toggles SET enabled = 1 WHERE feature_id = "feature_section"</strong></p>
+            <br>
         </div>
     {% endif %}
 
     {% if some_feature_section %}
         <div>
-            <p>This section is only visible with "some_feature" enabled for request located in "barcelona"</p>
+            <h2>Some feature section <strong>enabled</strong></h2>
+            <p>
+                This section is displayed when <strong>feature_section</strong> feature is: <strong>enabled</strong> through the <strong>inmemory</strong> driver. To disable it, you can go to the
+                <em>config/autoload/pheature-flags.global.php</em> and change the <em>enabled</em> field of the <strong>some_feature_section</strong> to <strong>false</strong> .
+            </p>
+            <br>
+        </div>
+    {% else %}
+        <div>
+            <h2>Some feature section <strong>disabled</strong></h2>
+            <p>
+                This section is displayed when <strong>feature_section</strong> feature is: <strong>disabled</strong> through the <strong>inmemory</strong> driver. To enable it, you can go to the
+                <em>config/autoload/pheature-flags.global.php</em> and change the <em>enabled</em> field of the <strong>some_feature_section</strong> to <strong>true</strong> .
+            </p>
+            <br>
         </div>
     {% endif %}
 
-    {% if in_progress_feature_section %}
+    {% if show_contact_information %}
         <div>
-            <p>This is a work in progress section only visible with "in_progress_feature_section"
-                enabled for users with "ROLE_DEVELOPER"</p>
+            <h2>Contact information section <strong>enabled</strong></h2>
+            <ul>
+                <li>Phone: 666-333-444</li>
+                <li>Address: 9 My street</li>
+            </ul>
+            <p>This section is <strong>enabled</strong> because:</p>
+            <ul>
+                <li>There is a logged user "<strong>developer</strong>" you pass through the query string of the URL.</li>
+                <li>
+                    Logged user has the <strong>location</strong> in <strong>barcelona</strong> (see preloaded information of this user in this
+                    PSR-7 middleware for this example: <em>src/App/src/User/RouteBasedAuthenticationMiddleware.php</em>
+                </li>
+            </ul>
+        </div>
+    {% else %}
+        <div>
+            <h2>Contact information section <strong>disabled</strong></h2>
+            <p>This section is displayed as <strong>disabled</strong> because:</p>
+            <ul>
+                <li>No logged user</li>
+                <li>Logged user does not have the <strong>location</strong> in <strong>barcelona</strong></li>
+            </ul>
+            <p>
+                To enable it try to access using this URL: <a href="{{ url('app.pheature', {}, {'user': 'developer'}) }}">{{ url('app.pheature', {}, {'user': 'developer'}) }}</a> .
+                This URL has a query string <strong>?user=developer</strong> that corresponds to a username with its location in "barcelona".
+            </p>
+        </div>
+    {% endif %}
+
+    {% if work_in_progress_section %}
+        <div>
+            <h2>Work in progress section <strong>enabled</strong></h2>
+            <p>
+                This section is displayed when <strong>work_in_progress</strong> feature is: <strong>enabled</strong> through the <strong>inmemory</strong> driver. To disable it, you can go to the
+                <em>config/autoload/pheature-flags.global.php</em> and change the <em>enabled</em> field of the <strong>work_in_progress</strong> to <strong>false</strong> .
+                Also, this feature is available in the <strong>dbal</strong> driver, and by default it is disabled. The reason of this duplication is to see that we can define in the <em>config/autoload/pheature-flags.global.php</em> config the
+                driver <strong>chain</strong>. After that, you can define all available drivers in the field <strong>driver_options</strong>. The current behaviour is:
+            </p>
+            <ol>
+                <li>Check if the requested feature toggle exists in the <strong>inmemory</strong> driver. If exists, return if it's enabled or not.</li>
+                <li>Check if the requested feature toggle exists in the <strong>dbal</strong> driver. If exists, return if it's enabled or not.</li>
+            </ol>
+            <p>* Note that the first driver that has the feature, its status will be returned without taking into account the rest of the drivers defined in the chain.</p>
+            <br>
+        </div>
+    {% else %}
+        <div>
+            <h2>Work in progress section <strong>disabled</strong></h2>
+            <p>
+                This section is displayed when <strong>work_in_progress</strong> feature is: <strong>disabled</strong> through the <strong>inmemory</strong> driver. To enable it, you can go to the
+                <em>config/autoload/pheature-flags.global.php</em> and change the <em>enabled</em> field of the <strong>work_in_progress</strong> to <strong>true</strong> .
+                Also, this feature is available in the <strong>dbal</strong> driver, and by default it is disabled. The reason of this duplication is to see that we can define in the <em>config/autoload/pheature-flags.global.php</em> config the
+                driver <strong>chain</strong>. After that, you can define all available drivers in the field <strong>driver_options</strong>. The current behaviour is:
+            </p>
+            <ol>
+                <li>Check if the requested feature toggle exists in the <strong>inmemory</strong> driver. If exists, return if it's enabled or not.</li>
+                <li>Check if the requested feature toggle exists in the <strong>dbal</strong> driver. If exists, return if it's enabled or not.</li>
+            </ol>
+            <p>* Note that the first driver that has the feature, its status will be returned without taking into account the rest of the drivers defined in the chain.</p>
+            <br>
         </div>
     {% endif %}
 {% endblock %}

@@ -12,6 +12,9 @@ COPY --from=mysql:8.0 /usr/bin/mysql /usr/local/bin/mysql
 
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
 
+# Install packages
+RUN apt-get update && apt-get install -y zip unzip
+
 RUN docker-php-ext-install pdo_mysql
 
 ENTRYPOINT ["docker-php-entrypoint"]

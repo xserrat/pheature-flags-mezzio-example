@@ -24,7 +24,6 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
-            PheaturePageHandler::class => PheaturePageHandlerFactory::class,
             \Doctrine\DBAL\Connection::class => \App\DoctrineConnectionFactory::class,
         ],
     ],
